@@ -24,11 +24,12 @@ const UserSchema = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-  });
+  },
+  { tableName: 'users', timestamps: false });
 
-  User.associate = (models) => {
+  /* User.associate = (models) => {
     User.hasMany(models.BlogPost, { foreignKey: 'user_id', as: 'blog_posts' })
-  };
+  }; */
 
   return User;
 };
