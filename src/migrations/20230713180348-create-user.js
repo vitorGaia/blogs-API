@@ -9,9 +9,10 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
-      display_name: {
+      displayName: {
         type: Sequelize.STRING,
         allowNull: false,
+        field: 'display_name',
       },
       email: {
         type: Sequelize.STRING,
@@ -23,9 +24,10 @@ module.exports = {
       },
       image: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
-    })
+    },
+    { timestamps: false, underscored: true })
   },
 
   down: async (queryInterface, _Sequelize) => {

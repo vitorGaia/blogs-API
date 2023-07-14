@@ -8,9 +8,10 @@ const UserSchema = (sequelize, DataTypes) => {
       autoIncrement: true,
       allowNull: false,
     },
-    display_name: {
+    displayName: {
       type: DataTypes.STRING,
       allowNull: false,
+      field: 'display_name',
     },
     email: {
       type: DataTypes.STRING,
@@ -22,10 +23,10 @@ const UserSchema = (sequelize, DataTypes) => {
     },
     image: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
   },
-  { tableName: 'users', timestamps: false });
+  { tableName: 'users', timestamps: false, underscored: true });
 
   /* User.associate = (models) => {
     User.hasMany(models.BlogPost, { foreignKey: 'user_id', as: 'blog_posts' })
