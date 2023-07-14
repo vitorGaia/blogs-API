@@ -6,10 +6,14 @@ const extractToken = (bearerToken) => bearerToken.split(' ')[1];
 
 module.exports = (req, res, next) => {
   const bearerToken = req.header('Authorization');
-  const token = extractToken(bearerToken);
-
+  let token = bearerToken;
+  
   if (!bearerToken) {
     return res.status(401).json({ message: 'Token not found' });
+  }
+  
+  if (bearerToken.includes('Bearer')) {
+    token = extractToken(bearerToken);
   }
 
   try {
