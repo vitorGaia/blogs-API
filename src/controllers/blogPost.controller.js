@@ -29,8 +29,25 @@ const getPostById = async (req, res) => {
   return res.status(200).json(post);
 };
 
+const updatePost = async (req, res) => {
+  const { title, content } = req.body;
+  const { id } = req.params;
+
+  if (!title || !content) {
+    return res.status(400).json({ message: 'Some required fields are missing' });
+  }
+
+  const updatedPost = await blogPostService
+  .updatePost({ title, content, userEmail: req.userEmail, postId: id });
+
+  if (!updatedPost) return res.status(401).json({ message: 'Unauthorized user' });
+
+  return res.status(200).json(updatedPost);
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
+  updatePost,
 };

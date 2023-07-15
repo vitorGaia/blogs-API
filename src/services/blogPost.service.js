@@ -44,8 +44,33 @@ const getPostById = async (id) => {
   return post;
 };
 
+const updatePost = async ({ title, content, userEmail, postId }) => {
+  const user = await User.findOne({ where: { email: userEmail }, attributes: ['id'] });
+  const post = await getPostById(postId);
+  const userId = user.id;
+  const userIdPost = post.user.id;
+
+  if (userId !== userIdPost) return false;
+
+  await BlogPost.update({ title, content }, { where: { id: postId, userId } });
+
+  const updatedPost = await BlogPost.findOne({
+    where: { id: postId },
+    include: [
+      { model: User, as: 'user', attributes: ['id', 'displayName', 'email', 'image'] },
+      { model: Category,
+        as: 'categories',
+        attributes: ['id', 'name'],
+        through: { attributes: [] } },
+    ],
+  });
+
+  return updatedPost;
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
+  updatePost,
 };
